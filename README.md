@@ -64,7 +64,7 @@ python app.py
 
 	1. EC2 access : It is virtual machine
 
-	2. ECR: Elastic Container registry to save your docker image in aws
+	2. ECR: Elastic Container registry to save your docker image in Aws
 
 
 	#Description: About the deployment
