@@ -1,147 +1,121 @@
-# Generate README.md
-readme_content = """
-# Medical Chatbot with Generative AI and Pinecone Integration
+# 🩺 Medical Chatbot with Generative AI and Pinecone Integration
 
 ## Overview
+The **Medical Chatbot** leverages **Flask**, **LangChain**, **Pinecone**, and **OpenAI's GPT models** to provide users with accurate responses to medical-related queries. This system processes documents, encodes them using Hugging Face embeddings, and utilizes Pinecone for efficient vector storage and retrieval, delivering intelligent and concise responses through a user-friendly web interface.
 
-This project implements a **Medical Chatbot** using **Flask**, **LangChain**, **Pinecone**, and **OpenAI's GPT models**. It allows users to input medical-related queries and retrieves relevant context from preprocessed documents to generate accurate, concise responses. The system leverages Pinecone for efficient vector storage and retrieval and integrates Hugging Face embeddings for document encoding.
+---
 
-# End-to-End-Machine-Learning-Pipeline
+## ✨ Features
+- **Document Preprocessing**: Splits and processes large text documents into manageable chunks.
+- **Vector Storage**: Efficient indexing and storage using Pinecone.
+- **Intelligent Retrieval**: Retrieves relevant context for user queries.
+- **Generative AI Integration**: Powered by OpenAI GPT models for natural language understanding.
+- **Simple Web Interface**: Easy-to-use interface built with Flask.
 
+---
 
-## Workflows
+## 🚀 Workflows
 
-1. Update config.yaml
-2. Update schema.yaml
-3. Update params.yaml
-4. Update the entity
-5. Update the configuration manager in src config
-6. Update the components
-7. Update the pipeline 
-8. Update the main.py
-9. Update the app.py
+1. **Update Configuration Files**:
+   - `config.yaml`
+   - `schema.yaml`
+   - `params.yaml`
+2. **Modify the Entity and Configuration Manager**:
+   - `src/config/`
+3. **Adjust Pipeline Components**:
+   - `main.py`
+   - `app.py`
 
+---
 
+## 🛠️ Setup Instructions
 
-# How to run?
-### STEPS:
+### Prerequisites
+- Python 3.8+
+- **Pinecone API Key**
+- **OpenAI API Key**
 
-Clone the repository
-
+### 1️⃣ Clone the Repository
 ```bash
-https://github.com/tanvircs/Aws-Machine-Learning-Pipeline.git
+git clone https://github.com/your-username/medical-chatbot.git
+cd medical-chatbot
 ```
-### STEP 01- Create a conda environment after opening the repository
 
+### 2️⃣ Create a Virtual Environment
 ```bash
-conda create -n mlproj python=3.8 -y
+conda create -n medical-chatbot python=3.8 -y
+conda activate medical-chatbot
 ```
 
-```bash
-conda activate Mlproj
-```
-
-
-### STEP 02- install the requirements
+### 3️⃣ Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
+### 4️⃣ Set API Keys
+Create a `.env` file with the following:
+```plaintext
+PINECONE_API_KEY=your_pinecone_api_key
+OPENAI_API_KEY=your_openai_api_key
+```
 
+### 5️⃣ Preprocess Data and Create Index
+```bash
+python store_index.py
+```
+
+### 6️⃣ Start the Application
 ```bash
 python app.py
 ```
 
+---
 
+## 🌐 Deployment on AWS with GitHub Actions
 
-# AWS-CICD-Deployment-with-Github-Actions
+### 1️⃣ AWS Setup
+1. **Login to AWS Console**.
+2. **Create an IAM User** with:
+   - EC2 Access: For virtual machine deployment.
+   - ECR Access: To save Docker images.
 
-## 1. Login to AWS console.
+### 2️⃣ AWS Policies
+Assign the following policies:
+- `AmazonEC2ContainerRegistryFullAccess`
+- `AmazonEC2FullAccess`
 
-## 2. Create IAM user for deployment
+### 3️⃣ Create ECR Repository
+Store your Docker image URI:
+```plaintext
+<aws_account_id>.dkr.ecr.<region>.amazonaws.com/<repository_name>
+```
 
-	#with specific access
+### 4️⃣ Set Up EC2 Instance
+1. Launch an Ubuntu EC2 instance.
+2. Install Docker:
+   ```bash
+   sudo apt-get update -y
+   sudo apt-get install docker.io -y
+   ```
 
-	1. EC2 access : It is virtual machine
+### 5️⃣ Configure GitHub Secrets
+Set the following secrets in your repository:
+```plaintext
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_REGION=
+AWS_ECR_LOGIN_URI=
+ECR_REPOSITORY_NAME=
+```
 
-	2. ECR: Elastic Container registry to save your docker image in Aws
-
-
-	#Description: About the deployment
-
-	1. Build docker image of the source code
-
-	2. Push your docker image to ECR
-
-	3. Launch Your EC2 
-
-	4. Pull Your image from ECR in EC2
-
-	5. Lauch your docker image in EC2
-
-	#Policy:
-
-	1. AmazonEC2ContainerRegistryFullAccess
-
-	2. AmazonEC2FullAccess
-
-	
-## 3. Create ECR repo to store/save docker image
-    - Save the URI: 315865595366.dkr.ecr.us-east-1.amazonaws.com/winerepo
-
-	
-## 4. Create EC2 machine (Ubuntu) 
-
-## 5. Open EC2 and Install docker in EC2 Machine:
-	
-	
-	#optinal
-
-	sudo apt-get update -y
-
-	sudo apt-get upgrade
-	
-	#required
-
-	curl -fsSL https://get.docker.com -o get-docker.sh
-
-	sudo sh get-docker.sh
-
-	sudo usermod -aG docker ubuntu
-
-	newgrp docker
-	
-# 6. Configure EC2 as self-hosted runner:
-    setting>actions>runner>new self hosted runner> choose os> then run command one by one
-
-
-# 7. Setup github secrets:
-
-    AWS_ACCESS_KEY_ID=
-
-    AWS_SECRET_ACCESS_KEY=
-
-    AWS_REGION = us-east-1
-
-    AWS_ECR_LOGIN_URI = demo>>  566373416292.dkr.ecr.ap-south-1.amazonaws.com
-
-    ECR_REPOSITORY_NAME = simple-app
-
+### 6️⃣ Deploy
+1. Build and push the Docker image.
+2. Pull the image from ECR to EC2.
+3. Run the containerized application.
 
 ---
 
-## Features
-
-- **Document Preprocessing**: Extracts and splits documents into manageable text chunks.
-- **Vector Storage**: Uses Pinecone for indexing and storing embeddings.
-- **Intelligent Retrieval**: Retrieves relevant documents based on user queries.
-- **Language Model Integration**: Utilizes OpenAI GPT for generating responses.
-- **User-Friendly Web Interface**: A simple Flask-based front end for user interaction.
-
----
-
-## Project Structure
-
+## 📂 Project Structure
 ```plaintext
 .
 ├── app.py                # Main Flask application
@@ -158,45 +132,12 @@ python app.py
 ├── test.py               # Test script
 ```
 
-## Prerequisites
-- Python 3.8+
-- Pinecone API Key
-- OpenAI API Key
+---
 
-## Key Libraries
-- flask
-- langchain
-- sentence-transformers
-- pinecone
-- python-dotenv
+## ❤️ Credits
+**Developed by**: Tanvir Ahmed  
+**GitHub**: [tanvircs](https://github.com/tanvircs)
 
-## Setup Instructions
-### 1. Clone the Repository
-```bash
-git clone https://github.com/your-username/medical-chatbot.git
-cd medical-chatbot
-```
-### 2. Clone the Repository
-```bash
-pip install -r requirements.txt
-```
-### 3. Install Dependencies
-```bash
-PINECONE_API_KEY=your_pinecone_api_key
-OPENAI_API_KEY=your_openai_api_key
-```
-### 4. Initialize the File Structure (Optional)
-```bash
-python template.py
-```
-### 5. Preprocess Data and Create Index
-```bash
-python store_index.py
-```
-### 6. Start the Application
-```bash
-python app.py
-```
+---
 
-## Created with ❤️ by Tanvir Ahmed.
-This README file provides a clear and comprehensive guide for using and understanding your Medical Chatbot application. 
+This README file ensures a clear structure, eliminates redundancy, and provides step-by-step guidance to enhance readability and professionalism.
